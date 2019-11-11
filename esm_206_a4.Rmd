@@ -15,3 +15,15 @@ library(janitor)
 library(tidyr)
 ```
 
+REsults A:
+```{r}
+lobster_abundance <- read.csv("lobster_abundance_sbc_lter.csv",
+                              na = "-99999") %>% 
+  clean_names()
+```
+
+```{r}
+lobster_ysite <- lobster_abundance %>% 
+  count(year, site)
+```
+
