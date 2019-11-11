@@ -1,6 +1,6 @@
 ---
 title: "esm 206 assignment 4"
-author: "Derek Nguyen"
+author: "Derek Nguyen and Bobby Miyashiro"
 date: "11/10/2019"
 output: html_document
 ---
