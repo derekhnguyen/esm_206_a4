@@ -35,7 +35,7 @@ RESULTS
 
 
 
-Results A: Visually explore changes in annual lobster abundance (counts) by site
+
 ```{r}
 lobster_abundance <- read_csv("lobster_abundance_sbc_lter.csv",
                               na = "-99999") %>% 
@@ -51,8 +51,8 @@ lobster_tidy <- lobster_abundance %>%
 
 ```{r}
 lobster_ysite <- lobster_tidy %>% 
-  count(year, site
-  ) %>%  
+  select(year, site, size_mm) %>% 
+  count(year, site) %>%  
   group_by(site, year)
 
 ```
@@ -61,24 +61,24 @@ lobster_ysite <- lobster_tidy %>%
 colnames(lobster_ysite)[colnames(lobster_ysite) =="n"] <- "total_count"
 ```
 
-
+Results A: Visually explore changes in annual lobster abundance (counts) by site
 ```{r}
 ggplot(lobster_ysite, aes(x = year, y = total_count),
        show.legend = FALSE) +
   geom_line(aes(color = site),
             show.legend = FALSE) +
-  geom_point(aes(color = site),
+  geom_point(aes(color = site, shape = site),
              show.legend = FALSE) +
   scale_x_continuous(lim = c(2012, 2019), expand = c(0,0)) +
   scale_y_continuous(lim = c(0, 1000), expand = c(0,0)) +
   theme_minimal() +
-  labs(title = "Annual Lobster Abundance by Site",
-       subtitle = "2012 - 2018",
+  labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
+       subtitle = "MPAs: IVEE & NAPL",
        x = "Year",
        y = "Total Lobster Observations",
        caption = "Figure 1: Lobster Abundance at 5 sites for year 2012 - 2018")  +
-  geom_dl(aes(label = site, color = site), method = list("last.points"),
-          ) 
+  geom_dl(aes(label = site, color = site), method = list("last.points", cex = .65, hjust = -.2))
+            
 ```
  
 ```{r}
@@ -107,7 +107,7 @@ ggplot(data = lobster_size) +
   geom_histogram(aes(x = size_mm, fill = site, alpha = 0.5, color = site),
                  show.legend = FALSE) +
   facet_grid(year~site, scales = "free") +
-  theme_light() +
+  theme_minimal() +
   scale_y_continuous(expand = c(0,0)) +
   scale_x_continuous(expand = c(0,0)) +
   labs(title = "Lobster Size Distributions across 5 Sites",
@@ -117,9 +117,45 @@ ggplot(data = lobster_size) +
        y = "Total Observations")
 ```
 
+```{r}
+ggplot(data = lobster_size) +
+  geom_qq(aes(sample = size_mm, color = site, alpha = 0.5, fill = site),
+      shape = 25,
+          show.legend = FALSE) +
+  facet_grid(year~site, scales = "free") +
+  theme_minimal()
+  
+```
+
+
 
 Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
 
+```{r}
+lobster_mean_size18 <- lobster_tidy %>% 
+  filter(year %in% 2018) %>% 
+  group_by(site) %>% 
+  summarize(total = mean(size_mm))
+```
+
+```{r}
+ggplot(data = lobster_mean_size18, aes(x = site, y = total, color = "black", fill = site), show.legend = FALSE) +
+  geom_col(show.legend = FALSE) +
+  labs(title = "Mean Lobster size 2018")
+
+ggplot(data = lobster_mean_size12, aes(x = site, y = total, color = "black", fill = site), show.legend = FALSE) +
+  geom_col(show.legend = FALSE) +
+  labs(title = "Mean Lobster size 2012")
+  
+```
+
+
+```{r}
+lobster_mean_size12 <- lobster_tidy %>% 
+  filter(year %in% 2012) %>% 
+  group_by(site) %>% 
+  summarize(total = mean(size_mm))
+```
 
 
 
