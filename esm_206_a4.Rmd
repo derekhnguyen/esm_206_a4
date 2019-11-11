@@ -15,7 +15,16 @@ library(janitor)
 library(tidyr)
 ```
 
-REsults A:
+INTRODUCTION
+
+DATA AND METHODS
+
+
+RESULTS
+
+
+
+Results A: Visually explore changes in annual lobster abundance (counts) by site
 ```{r}
 lobster_abundance <- read.csv("lobster_abundance_sbc_lter.csv",
                               na = "-99999") %>% 
@@ -27,3 +36,19 @@ lobster_ysite <- lobster_abundance %>%
   count(year, site)
 ```
 
+
+
+Results B. Visually explore lobster size distribution shifts by comparing lobster sizes in 2012 and 2018.
+
+
+
+Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
+
+
+
+
+SUMMARY
+
+
+
+REFERENCES
