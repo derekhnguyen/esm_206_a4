@@ -1,0 +1,17 @@
+---
+title: "esm 206 assignment 4"
+author: "Derek Nguyen"
+date: "11/10/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(tidyr)
+```
+
