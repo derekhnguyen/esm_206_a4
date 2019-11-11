@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(janitor)
 library(tidyr)
+library(ggridges)
 ```
 
 INTRODUCTION
@@ -26,18 +27,22 @@ RESULTS
 
 Results A: Visually explore changes in annual lobster abundance (counts) by site
 ```{r}
-lobster_abundance <- read.csv("lobster_abundance_sbc_lter.csv",
+lobster_abundance <- read_csv("lobster_abundance_sbc_lter.csv",
                               na = "-99999") %>% 
-  clean_names()
+  clean_names() 
+  
 ```
 
 ```{r}
 lobster_ysite <- lobster_abundance %>% 
+  count(year, count, site
+  )
 
 ```
 
 ```{r}
-ggplot(lobster_ysite, aes(x = year))
+ggplot(lobster_ysite, aes(x = year)) +
+  geom_histogram()
 ```
 
 
