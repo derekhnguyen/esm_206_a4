@@ -9,8 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, echo = FALSE, include = FALSE, eval = FALSE}
 install.packages("directlabels")
+install.packages("viridis")
+install.packages("lmtest", repos = "http://cran.us.r-project.org")
 ```
 
 
@@ -21,6 +23,7 @@ library(tidyr)
 library(ggridges)
 library(directlabels)
 library(lattice)
+library(viridis)
 ```
 
 INTRODUCTION
@@ -37,22 +40,30 @@ Results A: Visually explore changes in annual lobster abundance (counts) by site
 lobster_abundance <- read_csv("lobster_abundance_sbc_lter.csv",
                               na = "-99999") %>% 
   clean_names() 
-  
 ```
 
 ```{r}
-lobster_ysite <- lobster_abundance %>% 
-  count(year, count, site
-  ) %>% 
-  mutate(tot_obs = count * n) %>% 
-  select(year, site, tot_obs) %>% 
-  group_by(site, year) %>%
-  summarize(tot_obs_yr_site = sum(tot_obs))
+lobster_tidy <- lobster_abundance %>% 
+  tidyr::uncount(count)
+```
+
+
+
+```{r}
+lobster_ysite <- lobster_tidy %>% 
+  count(year, site
+  ) %>%  
+  group_by(site, year)
 
 ```
 
 ```{r}
-ggplot(lobster_ysite, aes(x = year, y = tot_obs_yr_site),
+colnames(lobster_ysite)[colnames(lobster_ysite) =="n"] <- "total_count"
+```
+
+
+```{r}
+ggplot(lobster_ysite, aes(x = year, y = total_count),
        show.legend = FALSE) +
   geom_line(aes(color = site),
             show.legend = FALSE) +
@@ -64,17 +75,19 @@ ggplot(lobster_ysite, aes(x = year, y = tot_obs_yr_site),
   labs(title = "Annual Lobster Abundance by Site",
        subtitle = "2012 - 2018",
        x = "Year",
-       y = "Total Lobster Observations")  +
+       y = "Total Lobster Observations",
+       caption = "Figure 1: Lobster Abundance at 5 sites for year 2012 - 2018")  +
   geom_dl(aes(label = site, color = site), method = list("last.points"),
-          )
+          ) 
 ```
  
 ```{r}
 ggplot(lobster_ysite, aes(x = year)) +
-  geom_histogram(aes(fill = site)
-                 ) +
-  facet_wrap(~site) +
-  theme_minimal()
+  geom_histogram(data = transform(lobster_ysite), fill = "gray90") +
+  geom_histogram(aes(fill = site),
+                 color = NA,
+                 show.legend = FALSE) +
+  facet_wrap(~site)
 
 ```
 
@@ -82,9 +95,31 @@ ggplot(lobster_ysite, aes(x = year)) +
 
 Results B. Visually explore lobster size distribution shifts by comparing lobster sizes in 2012 and 2018.
 
+```{r}
+lobster_size <- lobster_tidy %>% 
+  filter(year %in% c(2012, 2018)) %>% 
+  select(year, site, size_mm)
+```
+
+Histogram for Results B
+```{r}
+ggplot(data = lobster_size) +
+  geom_histogram(aes(x = size_mm, fill = site, alpha = 0.5, color = site),
+                 show.legend = FALSE) +
+  facet_grid(year~site, scales = "free") +
+  theme_light() +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_x_continuous(expand = c(0,0)) +
+  labs(title = "Lobster Size Distributions across 5 Sites",
+       caption = "Figure 2: Lobster Size for 2012 & 2018",
+       subtitle = "2012 & 2018",
+       x = "Size in Millimeter",
+       y = "Total Observations")
+```
 
 
 Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
+
 
 
 
