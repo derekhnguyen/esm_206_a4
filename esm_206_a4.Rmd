@@ -36,7 +36,11 @@ lobster_abundance <- read_csv("lobster_abundance_sbc_lter.csv",
 ```{r}
 lobster_ysite <- lobster_abundance %>% 
   count(year, count, site
-  )
+  ) %>% 
+  mutate(tot_obs = count * n) %>% 
+  select(year, site, tot_obs) %>% 
+  group_by(site, year) %>%
+  summarize(tot_obs_yr_site = sum(tot_obs))
 
 ```
 
