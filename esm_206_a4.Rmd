@@ -56,6 +56,8 @@ ggplot(lobster_ysite, aes(x = year, y = tot_obs_yr_site),
        show.legend = FALSE) +
   geom_line(aes(color = site),
             show.legend = FALSE) +
+  geom_point(aes(color = site),
+             show.legend = FALSE) +
   scale_x_continuous(lim = c(2012, 2019), expand = c(0,0)) +
   scale_y_continuous(lim = c(0, 1000), expand = c(0,0)) +
   theme_minimal() +
