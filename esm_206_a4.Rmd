@@ -1,6 +1,6 @@
 ---
 title: "esm 206 assignment 4"
-author: "Derek Nguyen and Bobby Miyashiro"
+author: "Derek Nguyen"
 date: "11/10/2019"
 output: html_document
 ---
@@ -33,7 +33,11 @@ lobster_abundance <- read.csv("lobster_abundance_sbc_lter.csv",
 
 ```{r}
 lobster_ysite <- lobster_abundance %>% 
-  count(year, site)
+
+```
+
+```{r}
+ggplot(lobster_ysite, aes(x = year))
 ```
 
 
@@ -49,7 +53,6 @@ Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018.
 
 SUMMARY
 
-testing
-
+-poop
 
 REFERENCES
