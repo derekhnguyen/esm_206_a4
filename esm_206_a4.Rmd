@@ -26,12 +26,12 @@ library(lattice)
 library(viridis)
 ```
 
-INTRODUCTION
+###INTRODUCTION
 
-DATA AND METHODS
+###DATA AND METHODS
 
 
-RESULTS
+###RESULTS
 
 
 
@@ -59,9 +59,19 @@ lobster_ysite <- lobster_tidy %>%
 
 ```{r}
 colnames(lobster_ysite)[colnames(lobster_ysite) =="n"] <- "total_count"
+
+lobster_ysite$site[lobster_ysite$site == "AQUE"] <- "Arroyo Quemado"
+
+lobster_ysite$site[lobster_ysite$site == "CARP"] <- "Carpinteria"
+
+lobster_ysite$site[lobster_ysite$site == "IVEE"] <- "Isla Vista"
+
+lobster_ysite$site[lobster_ysite$site == "MOHK"] <- "Mohawk"
+
+lobster_ysite$site[lobster_ysite$site == "NAPL"] <- "Naples"
 ```
 
-Results A: Visually explore changes in annual lobster abundance (counts) by site
+#Results A: Visually explore changes in annual lobster abundance (counts) by site
 ```{r}
 ggplot(lobster_ysite, aes(x = year, y = total_count),
        show.legend = FALSE) +
@@ -86,11 +96,25 @@ ggplot(lobster_ysite, aes(x = year)) +
   geom_histogram(data = transform(lobster_ysite), fill = "gray90") +
   geom_histogram(aes(fill = site),
                  color = NA,
+                 bins = 7,
+                 binwidth = 1,
                  show.legend = FALSE) +
+  ylim(c(0,2)) +
   facet_wrap(~site)
 
 ```
 
+```{r}
+ggplot(lobster_ysite, aes(x = year, y = total_count)) +
+  geom_col(fill = "navy") +
+  facet_wrap(~site) +
+  theme_bw() +
+  labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
+       subtitle = "MPAs: Isla Vista and Naples",
+       x = "Year",
+       y = "Total Lobster Observations",
+       caption = "Figure 1: Lobster Abundance at 5 sites for year 2012 - 2018")
+```
 
 
 Results B. Visually explore lobster size distribution shifts by comparing lobster sizes in 2012 and 2018.
