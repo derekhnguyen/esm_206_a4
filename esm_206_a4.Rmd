@@ -138,6 +138,16 @@ lobster_mean_size18 <- lobster_tidy %>%
   summarize(total = mean(size_mm))
 ```
 
+
+
+```{r}
+lobster_mean_size12 <- lobster_tidy %>% 
+  filter(year %in% 2012) %>% 
+  group_by(site) %>% 
+  summarize(total = mean(size_mm))
+```
+
+
 ```{r}
 ggplot(data = lobster_mean_size18, aes(x = site, y = total, color = "black", fill = site), show.legend = FALSE) +
   geom_col(show.legend = FALSE) +
@@ -150,12 +160,8 @@ ggplot(data = lobster_mean_size12, aes(x = site, y = total, color = "black", fil
 ```
 
 
-```{r}
-lobster_mean_size12 <- lobster_tidy %>% 
-  filter(year %in% 2012) %>% 
-  group_by(site) %>% 
-  summarize(total = mean(size_mm))
-```
+
+
 
 
 
