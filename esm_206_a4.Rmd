@@ -81,8 +81,7 @@ ggplot(lobster_ysite, aes(x = year, y = total_count),
   geom_line(aes(color = MPA),
             show.legend = FALSE) +
   facet_wrap(~site) +
-  geom_point(aes(color = MPA, shape = MPA),
-             show.legend = FALSE) +
+  geom_point(aes(color = MPA, shape = MPA)) +
   scale_x_continuous(lim = c(2012, 2021), expand = c(0,0)) +
   scale_y_continuous(lim = c(0, 1000), expand = c(0,0)) +
   theme_minimal() +
@@ -91,22 +90,30 @@ ggplot(lobster_ysite, aes(x = year, y = total_count),
        x = "Year",
        y = "Total Lobster Observations",
        caption = "Figure 1: Lobster Abundance at 5 sites for year 2012 - 2018")  +
-  geom_dl(aes(label = site, color = MPA), method = list("last.points", cex = .65, hjust = -.17))
+  geom_dl(aes(label = site, color = MPA), method = list("last.points", cex = .65, hjust = -.10))
             
 ```
  
 ```{r}
-ggplot(lobster_ysite, aes(x = year)) +
-  geom_histogram(data = transform(lobster_ysite), fill = "gray90") +
-  geom_histogram(aes(fill = site),
-                 color = NA,
-                 bins = 7,
-                 binwidth = 1,
-                 show.legend = FALSE) +
-  ylim(c(0,2)) +
-  facet_wrap(~site)
-
+ggplot(lobster_ysite, aes(x = year, y = total_count),
+       show.legend = FALSE) +
+  geom_line(aes(color = site),
+            show.legend = FALSE) +
+  geom_point(aes(color = site, shape = site),
+             show.legend = FALSE) +
+  scale_x_continuous(lim = c(2012, 2019), expand = c(0,0)) +
+  scale_y_continuous(lim = c(0, 1000), expand = c(0,0)) +
+  theme_minimal() +
+  labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
+       subtitle = "MPAs: IVEE & NAPL",
+       x = "Year",
+       y = "Total Lobster Observations",
+       caption = "Figure 1: Lobster Abundance at 5 sites for year 2012 - 2018")  +
+  geom_dl(aes(label = site, color = site), method = list("last.points", cex = .65, hjust = -.2))
 ```
+ 
+ 
+
 
 ```{r}
 ggplot(lobster_ysite, aes(x = year, y = total_count)) +
