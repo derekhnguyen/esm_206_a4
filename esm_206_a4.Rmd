@@ -110,7 +110,7 @@ ggplot(lobster_ysite, aes(x = year)) +
 
 ```{r}
 ggplot(lobster_ysite, aes(x = year, y = total_count)) +
-  geom_col(fill = "navy") +
+  geom_col(aes(fill = MPA), show.legend = FALSE) +
   facet_wrap(~site) +
   theme_bw() +
   labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
@@ -127,6 +127,16 @@ Results B. Visually explore lobster size distribution shifts by comparing lobste
 lobster_size <- lobster_tidy %>% 
   filter(year %in% c(2012, 2018)) %>% 
   select(year, site, size_mm)
+
+lobster_size$site[lobster_size$site == "AQUE"] <- "Arroyo Quemado"
+
+lobster_size$site[lobster_size$site == "CARP"] <- "Carpinteria"
+
+lobster_size$site[lobster_size$site == "IVEE"] <- "Isla Vista"
+
+lobster_size$site[lobster_size$site == "MOHK"] <- "Mohawk"
+
+lobster_size$site[lobster_size$site == "NAPL"] <- "Naples"
 ```
 
 Histogram for Results B
@@ -141,8 +151,8 @@ ggplot(data = lobster_size) +
   labs(title = "Lobster Size Distributions across 5 Sites",
        caption = "Figure 2: Lobster Size for 2012 & 2018",
        subtitle = "2012 & 2018",
-       x = "Size in Millimeter",
-       y = "Total Observations")
+       x = "Lobster Size (mm)",
+       y = "Total Lobster Observations")
 ```
 
 ```{r}
