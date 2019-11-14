@@ -13,6 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 install.packages("directlabels")
 install.packages("viridis")
 install.packages("lmtest", repos = "http://cran.us.r-project.org")
+install.packages("effsize")
+install.pacakages("kableExtra")
 ```
 
 
@@ -24,6 +26,8 @@ library(ggridges)
 library(directlabels)
 library(lattice)
 library(viridis)
+library(effsize)
+library(kableExtra)
 ```
 
 ###INTRODUCTION
@@ -189,10 +193,10 @@ mpa_2012 <- lobster_mean_size %>%
 mpa_2018 <- lobster_mean_size %>% 
   filter(year == "2018", mpa == "MPA")
 
-n_mpa_2012 <- sum(!is.na(mpa_2012$size_mm))
-n_mpa_2018 <- sum(!is.na(mpa_2018$size_mm))
-n_nonmpa_2012 <- sum(!is.na(nonmpa_2012$size_mm))
-n_nonmpa_2018 <- sum(!is.na(nonmpa_2018$size_mm))
+med_mpa_2012 <- median(mpa_2012$size_mm, na.rm = TRUE)
+med_mpa_2018 <- median(mpa_2018$size_mm, na.rm = TRUE)
+med_nonmpa_2012 <- median(nonmpa_2012$size_mm, na.rm = TRUE)
+med_nonmpa_2018 <- median(nonmpa_2018$size_mm, na.rm = TRUE)
 
 
 sd_mpa_2012 <- sd(mpa_2012$size_mm, na.rm = TRUE)
@@ -203,14 +207,19 @@ sd_nonmpa_2018 <- sd(nonmpa_2018$size_mm, na.rm = TRUE)
 mean_mpa_2012 <- mean(mpa_2012$size_mm, na.rm = TRUE) 
 mean_mpa_2018 <- mean(mpa_2018$size_mm, na.rm = TRUE) 
 mean_nonmpa_2012 <- mean(nonmpa_2012$size_mm, na.rm = TRUE)
-mean_nonmpa_2018 <- mean(nonmpa_2012$size_mm, na.rm = TRUE)
+mean_nonmpa_2018 <- mean(nonmpa_2018$size_mm, na.rm = TRUE)
 
+size_2012_ttest <- t.test(mpa_2012$size_mm, nonmpa_2012$size_mm, paired = FALSE)
+size_2012_d <- effsize::cohen.d(mpa_2012$size_mm, nonmpa_2012$size_mm, na.rm = TRUE)
 
-  
+size_2018_ttest <- t.test(mpa_2018$size_mm, nonmpa_2018$size_mm, paired = FALSE)
+size_2018_d <- effsize::cohen.d(mpa_2018$size_mm, nonmpa_2018$size_mm, na.rm = TRUE)
 
+size_mpa_ttest <- t.test(mpa_2012$size_mm, mpa_2018$size_mm, paired = FALSE)
+size_mpa_d <- effsize::cohen.d(mpa_2012$size_mm, mpa_2018$size_mm, na.rm = TRUE)
 
-
-
+size_nonmpa_ttest <- t.test(nonmpa_2012$size_mm, nonmpa_2018$size_mm, paired = FALSE)
+size_nonmpa_d <- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.rm = TRUE)
   
 ```
 
