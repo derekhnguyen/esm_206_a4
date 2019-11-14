@@ -117,9 +117,10 @@ ggplot(lobster_ysite, aes(x = year, y = total_count),
 
 ```{r}
 ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site)) +
-  geom_col(aes(fill = MPA, color = MPA, alpha = 0.7), show.legend = FALSE) +
+  geom_col(aes(fill = MPA, color = MPA, alpha = 0.7), 
+           show.legend = FALSE) +
   facet_wrap(~site) +
-  theme_bw() +
+  theme_minimal() +
   scale_y_continuous(expand = c(0,0), lim = c(0,1000)) +
   scale_x_continuous(expand = c(0,0)) +
   labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
@@ -179,32 +180,50 @@ ggplot(data = lobster_size) +
 Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
 
 ```{r}
-lobster_mean_size18 <- lobster_tidy %>% 
-  filter(year %in% 2018) %>% 
-  group_by(site) %>% 
-  summarize(total = mean(size_mm))
+lobster_mean_size <- lobster_tidy %>% 
+  mutate(mpa = case_when(
+    site %in% c("IVEE", "NAPL") ~ "MPA",
+    site %in% c("AQUE", "MOHK", "CARP") ~ "non-MPA")) %>% 
+  filter(year %in% c(2012, 2018)) %>% 
+  select(year, site, size_mm, mpa) %>% 
+  group_by(year, mpa)
 ```
 
-
-
 ```{r}
-lobster_mean_size12 <- lobster_tidy %>% 
-  filter(year %in% 2012) %>% 
-  group_by(site) %>% 
-  summarize(total = mean(size_mm))
-```
+nonmpa_2012 <- lobster_mean_size %>% 
+  filter(year =="2012", mpa == "non-MPA") 
+
+nonmpa_2018 <- lobster_mean_size %>% 
+  filter(year == "2018", mpa == "non-MPA")
+
+mpa_2012 <- lobster_mean_size %>% 
+  filter(year == "2012", mpa == "MPA")
+
+mpa_2018 <- lobster_mean_size %>% 
+  filter(year == "2018", mpa == "MPA")
 
 
-```{r}
-ggplot(data = lobster_mean_size18, aes(x = site, y = total, color = "black", fill = site), show.legend = FALSE) +
-  geom_col(show.legend = FALSE) +
-  labs(title = "Mean Lobster size 2018")
 
-ggplot(data = lobster_mean_size12, aes(x = site, y = total, color = "black", fill = site), show.legend = FALSE) +
-  geom_col(show.legend = FALSE) +
-  labs(title = "Mean Lobster size 2012")
+
+
+mean_mpa_2012 <- mean(mpa_2012$size_mm, na.rm = TRUE) 
+mean_mpa_2018 <- mean(mpa_2018$size_mm, na.rm = TRUE) 
+mean_nonmpa_2012 <- mean(nonmpa_2012$size_mm, na.rm = TRUE)
+mean_nonmpa_2018 <- mean(nonmpa_2012$size_mm, na.rm = TRUE)
+
+sd_mpa_2012 <- sd(mpa_2012$size_mm, na.rm = TRUE)
+sd_mpa_2018 <- sd(mpa_2018$size_mm, na.rm = TRUE)
+sd_nonmpa_2012 <- sd(nonmpa_2012$size_mm, na.rm = TRUE)
+sd_nonmpa_2018 <- sd(nonmpa_2018$size_mm, na.rm = TRUE)
+
+
+
+
+
+
   
 ```
+
 
 
 
