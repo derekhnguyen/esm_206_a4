@@ -27,6 +27,12 @@ library(viridis)
 ```
 
 ###INTRODUCTION
+![](spiny_guy.png)
+
+**Figure 1**: *[Spiny Lobster]* ([Credit: Alamy] (https://www.alamy.com/stock-photo/california-spiny-lobster.html))
+
+
+
 
 ###DATA AND METHODS
 
@@ -117,7 +123,7 @@ ggplot(lobster_ysite, aes(x = year, y = total_count),
 
 ```{r}
 ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site)) +
-  geom_col(aes(fill = MPA, color = MPA, alpha = 0.7)) +
+  geom_col(aes(fill = MPA, color = MPA, alpha = 0.9)) +
   facet_wrap(~site) +
   theme_dark() +
   scale_y_continuous(expand = c(0,0), lim = c(0,1000)) +
@@ -205,7 +211,7 @@ mean_mpa_2018 <- mean(mpa_2018$size_mm, na.rm = TRUE)
 mean_nonmpa_2012 <- mean(nonmpa_2012$size_mm, na.rm = TRUE)
 mean_nonmpa_2018 <- mean(nonmpa_2012$size_mm, na.rm = TRUE)
 
-
+median
   
 
 
@@ -213,6 +219,10 @@ mean_nonmpa_2018 <- mean(nonmpa_2012$size_mm, na.rm = TRUE)
 
   
 ```
+
+*Null Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are the same.
+
+*Alternate Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are not the same.
 
 
 
