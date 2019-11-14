@@ -33,7 +33,8 @@ library(kableExtra)
 ###INTRODUCTION
 ![](spiny_guy.png)
 
-**Figure 1**: *[Spiny Lobster]* ([Credit: Alamy] (https://www.alamy.com/stock-photo/california-spiny-lobster.html))
+
+**Figure 1**: *Spiny Lobster* ([Credit: Alamy] (https://www.alamy.com/stock-photo/california-spiny-lobster.html))
 
 
 
