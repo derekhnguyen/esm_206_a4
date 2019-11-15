@@ -225,7 +225,6 @@ lobster_size_table %>%
                         position = "center") %>%
           add_header_above(c("Lobster Size Metrics" = 5)) %>% 
           row_spec(c(1:4),
-                   bold = T,
                    color = "black")
 ```
 
