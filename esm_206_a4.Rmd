@@ -1,5 +1,5 @@
 ---
-title: "esm 206 assignment 4"
+title: "ESM 206 Assignment 4"
 author: "Derek Nguyen and Bobby Miyashiro"
 date: "11/10/2019"
 output: html_document
@@ -182,64 +182,57 @@ Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018.
 lobster_mean_size <- lobster_tidy %>% 
   mutate(mpa = case_when(
     site %in% c("IVEE", "NAPL") ~ "MPA",
-    site %in% c("AQUE", "MOHK", "CARP") ~ "non-MPA")) %>% 
+    site %in% c("AQUE", "MOHK", "CARP") ~ "Non-MPA")) %>% 
   filter(year %in% c(2012, 2018)) %>% 
-  select(year, site, size_mm, mpa)
+  select(year, site, size_mm, mpa) %>% 
+  group_by(year, mpa)
 ```
 
 ```{r}
-nonmpa_2012 <- lobster_mean_size %>% 
-  filter(year =="2012", mpa == "non-MPA") 
+lobster_size_table <- lobster_mean_size %>% 
+  summarize(mean = mean(size_mm, na.rm = TRUE),
+            sd = sd(size_mm, na.rm = TRUE),
+            sample_size = n()) %>% 
+  mutate_if(is.numeric, round, 1)
 
-nonmpa_2018 <- lobster_mean_size %>% 
-  filter(year == "2018", mpa == "non-MPA")
-
-mpa_2012 <- lobster_mean_size %>% 
-  filter(year == "2012", mpa == "MPA") 
-
-mpa_2018 <- lobster_mean_size %>% 
-  filter(year == "2018", mpa == "MPA")
-
-med_mpa_2012 <- median(mpa_2012$size_mm, na.rm = TRUE)
-med_mpa_2018 <- median(mpa_2018$size_mm, na.rm = TRUE)
-med_nonmpa_2012 <- median(nonmpa_2012$size_mm, na.rm = TRUE)
-med_nonmpa_2018 <- median(nonmpa_2018$size_mm, na.rm = TRUE)
-
-
-sd_mpa_2012 <- sd(mpa_2012$size_mm, na.rm = TRUE)
-sd_mpa_2018 <- sd(mpa_2018$size_mm, na.rm = TRUE)
-sd_nonmpa_2012 <- sd(nonmpa_2012$size_mm, na.rm = TRUE)
-sd_nonmpa_2018 <- sd(nonmpa_2018$size_mm, na.rm = TRUE)
-
-mean_mpa_2012 <- mean(mpa_2012$size_mm, na.rm = TRUE) 
-mean_mpa_2018 <- mean(mpa_2018$size_mm, na.rm = TRUE) 
-mean_nonmpa_2012 <- mean(nonmpa_2012$size_mm, na.rm = TRUE)
-mean_nonmpa_2018 <- mean(nonmpa_2012$size_mm, na.rm = TRUE)
+lobster_size_table %>% 
+  kable(col.names = c("Year",
+                      "MPA",
+                      "Mean",
+                      "Standard Deviation",
+                      "Sample Size")) %>% 
+          kable_styling(bootstrap_options = "striped",
+                        full_width = F,
+                        position = "center") %>%
+          add_header_above(c("Lobster Size Metrics" = 5))
+```
 
 
-
+```{r}
 size_2012_ttest <- t.test(mpa_2012$size_mm, nonmpa_2012$size_mm, paired = FALSE)
+# If P value is lower than alpha (0.5), which it is, we reject the null hypothesis and confirm the alternative hypothesis as it indicates strong evidence against the null hypothesis.
 size_2012_d <- effsize::cohen.d(mpa_2012$size_mm, nonmpa_2012$size_mm, na.rm = TRUE)
+# Effect size is 0.61, which is a medium effect size, thus the difference can be noticed with some effort.
 
 size_2018_ttest <- t.test(mpa_2018$size_mm, nonmpa_2018$size_mm, paired = FALSE)
+# If P value is lower than alpha (0.5), which it is, we reject the null hypothesis and confirm the alternative hypothesis as it indicates strong evidence against the null hypothesis.
 size_2018_d <- effsize::cohen.d(mpa_2018$size_mm, nonmpa_2018$size_mm, na.rm = TRUE)
+# Effect size is 0.35, which is a small effect size, thus to notice the difference it would have to be studied.
 
 size_mpa_ttest <- t.test(mpa_2012$size_mm, mpa_2018$size_mm, paired = FALSE)
+# If P value is lower than alpha (0.5), which it is, we reject the null hypothesis and confirm the alternative hypothesis as it indicates strong evidence against the null hypothesis.
 size_mpa_d <- effsize::cohen.d(mpa_2012$size_mm, mpa_2018$size_mm, na.rm = TRUE)
+# Effect size is 0.87, which is a large effect size, thus the difference is easily noticeable. Cohen's D shows that the P value's rejection of the null hypothesis is easily noticeable.
 
 size_nonmpa_ttest <- t.test(nonmpa_2012$size_mm, nonmpa_2018$size_mm, paired = FALSE)
+# If P value is lower than alpha (0.5), which it is NOT, thus we fail to reject the null hypothesis as it indicates weak evidence against the null hypothesis.
 size_nonmpa_d <- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.rm = TRUE)
-  
+# Effect size is 0.12, which is a small effect size, thus the difference between the samples is not easily noticeable. Cohen's D confirms that the uncertainty in the rejection of the null hypothesis, as indicated by the P value, is small.
 ```
 
 *Null Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are the same.
 
 *Alternate Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are not the same.
-
-
-
-
-
 
 
 
