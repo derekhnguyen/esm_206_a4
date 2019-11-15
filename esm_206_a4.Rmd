@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, eval = FALSE)
 ```
 
 ```{r, echo = FALSE, include = FALSE, eval = FALSE}
@@ -95,7 +95,7 @@ ggplot(lobster_ysite, aes(x = year, y = total_count),
   geom_point(aes(color = MPA, shape = MPA)) +
   scale_x_continuous(lim = c(2012, 2021), expand = c(0,0)) +
   scale_y_continuous(lim = c(0, 1000), expand = c(0,0)) +
-  theme_classic() +
+  theme_minimal() +
   labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
        subtitle = "MPAs: IVEE & NAPL",
        x = "Year",
@@ -127,8 +127,10 @@ ggplot(lobster_ysite, aes(x = year, y = total_count),
 
 
 ```{r}
-ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site)) +
-  geom_col(aes(fill = MPA, color = MPA, alpha = 0.9)) +
+ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
+       show.legend = FALSE) +
+  geom_col(aes(fill = MPA, color = MPA),
+            alpha = 0.9) +
   facet_wrap(~site) +
   theme_dark() +
   scale_y_continuous(expand = c(0,0), lim = c(0,1000)) +
@@ -145,8 +147,10 @@ Results B. Visually explore lobster size distribution shifts by comparing lobste
 
 ```{r}
 lobster_size <- lobster_tidy %>% 
+  select(year, site, size_mm) %>% 
   filter(year %in% c(2012, 2018)) %>% 
-  select(year, site, size_mm)
+  mutate(year = as.character(year))
+  
 
 lobster_size$site[lobster_size$site == "AQUE"] <- "Arroyo Quemado"
 
@@ -162,7 +166,8 @@ lobster_size$site[lobster_size$site == "NAPL"] <- "Naples"
 Histogram for Results B
 ```{r}
 ggplot(data = lobster_size) +
-  geom_histogram(aes(x = size_mm, fill = site, alpha = 0.7, color = site, binwidth = 10),
+  geom_histogram(aes(x = size_mm, fill = site, alpha = 0.7, color = site),
+                 binwidth = 6,
                  show.legend = FALSE) +
   facet_grid(year~site, scales = "free") +
   theme_minimal() +
@@ -174,6 +179,13 @@ ggplot(data = lobster_size) +
        x = "Lobster Size (mm)",
        y = "Total Lobster Observations")
 ```
+```{r}
+ggplot(data = lobster_size) +
+  geom_density(aes(fill = year, x = size_mm, color = year),
+               alpha = 0.5) +
+  facet_wrap(~site) +
+  theme_bw()
+```
 
 
 Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
@@ -182,11 +194,13 @@ Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018.
 lobster_mean_size <- lobster_tidy %>% 
   mutate(mpa = case_when(
     site %in% c("IVEE", "NAPL") ~ "MPA",
-    site %in% c("AQUE", "MOHK", "CARP") ~ "Non-MPA")) %>% 
+    site %in% c("AQUE", "MOHK", "CARP") ~ "non-MPA")) %>% 
   filter(year %in% c(2012, 2018)) %>% 
   select(year, site, size_mm, mpa) %>% 
   group_by(year, mpa)
 ```
+
+
 
 ```{r}
 lobster_size_table <- lobster_mean_size %>% 
@@ -194,7 +208,10 @@ lobster_size_table <- lobster_mean_size %>%
             sd = sd(size_mm, na.rm = TRUE),
             sample_size = n()) %>% 
   mutate_if(is.numeric, round, 1)
+```
 
+
+```{r}
 lobster_size_table %>% 
   kable(col.names = c("Year",
                       "MPA",
@@ -204,9 +221,23 @@ lobster_size_table %>%
           kable_styling(bootstrap_options = "striped",
                         full_width = F,
                         position = "center") %>%
-          add_header_above(c("Lobster Size Metrics" = 5))
+          add_header_above(c("Lobster Size Metrics" = 5)) %>% 
+          row_spec(c(1:4),
+                   bold = T,
+                   color = "black")
 ```
 
+```{r}
+nonmpa_2012 <- lobster_mean_size %>% 
+  filter(year =="2012", mpa == "non-MPA") 
+nonmpa_2018 <- lobster_mean_size %>% 
+  filter(year == "2018", mpa == "non-MPA")
+mpa_2012 <- lobster_mean_size %>% 
+  filter(year == "2012", mpa == "MPA") 
+mpa_2018 <- lobster_mean_size %>% 
+   filter(year == "2018", mpa == "MPA")
+
+```
 
 ```{r}
 size_2012_ttest <- t.test(mpa_2012$size_mm, nonmpa_2012$size_mm, paired = FALSE)
