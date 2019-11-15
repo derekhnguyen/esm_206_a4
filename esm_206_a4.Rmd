@@ -139,7 +139,8 @@ ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
        subtitle = "MPAs: Isla Vista and Naples",
        x = "Year",
        y = "Total Lobster Observations",
-       caption = "Figure 1: Lobster Abundance at 5 sites for year 2012 - 2018")
+       caption = "Figure 1: Lobster Abundance at 5 sites for year 2012 - 2018",
+       fill = "Site")
 ```
 
 
@@ -181,10 +182,11 @@ ggplot(data = lobster_size) +
 ```
 ```{r}
 ggplot(data = lobster_size) +
-  geom_density(aes(fill = year, x = size_mm, color = year),
+  geom_density(aes(fill = year, x = size_mm),
                alpha = 0.5) +
   facet_wrap(~site) +
-  theme_bw()
+  theme_bw() +
+  labs(x = "Size (mm)", y = "Density", title = "Lobster Distribution Across 5 Sites", fill = "Year")
 ```
 
 
