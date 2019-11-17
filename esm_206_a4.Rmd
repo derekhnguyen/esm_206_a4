@@ -35,10 +35,20 @@ library(kableExtra)
 The California Spiny Lobster, *Panulirus interruptus*, is a Decapod crustacean that has a habitat that spans from the Monterey Bay, California to Baja California, Mexico (Sea Grant California XXXX). The California Spiny Lobster is one of the largest spiny lobsters in the world with males being able to grow up to three feet long and weigh up to 26 pounds. Fishing of California Lobster is regulated by the California Department of Fish and Wildlife and have an open season from October through March (Sea Grant California and California Department of Fish and Wildlife XXXX). The California Spiny Lobster currently has a stable population and is caught by  commercial fisheries, hoop-net based recreational fishers, and dive-based recreational fishers (Sea Grant California XXXX).
 
 Data on California Spiny Lobsters has been collected off of the coast of Santa Barbara by the Santa Barbara Coastal Term Ecological Research (SBC LTER), an interdisciplinary program based at the University of California, Santa Barbara Marine Science Institute. SB LTER has been collecting data on size, abundance, and fishing pressure of California Spiny Lobster at five study sites along the Santa Barbara Channel since 2012. Two of the sites, Naples and Isla Vista, are within Marine Protected Areas (MPAs) and three of the sites, Arroyo Quemado, Mohawk, and Carpinteria, are otuside of MPAs (Reed D. 2019). In this report, we will be analyzing the changes in lobster sizes between the years of 2012 and 2018 and across the five different study sites.
+
+
 ![](spiny_guy.png)
 
 
-**Figure 1**: *Spiny Lobster* ([Credit: Alamy] (https://www.alamy.com/stock-photo/california-spiny-lobster.html))
+**Figure 1**: Spiny Lobster *(Credit: [Alamy] (https://www.alamy.com/stock-photo/california-spiny-lobster.html))*
+
+
+
+
+
+![](lobster sites.png)
+
+**Figure 2.** The five sampling locations *(Credit: [EDI Data Portal](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=77&revision=newest))*
 
 
 
@@ -228,7 +238,9 @@ lobster_size_table %>%
                         full_width = F,
                         position = "center") %>%
           add_header_above(c("Lobster Size Metrics" = 5)) %>% 
-          row_spec(c(1:4),
+          row_spec(c(1,3),
+                   color = "red") %>% 
+  row_spec(c(2,4),
                    color = "black")
 ```
 
