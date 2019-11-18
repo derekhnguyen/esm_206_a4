@@ -45,7 +45,7 @@ Data on California Spiny Lobsters has been collected off of the coast of Santa B
 
 ![](cooked_lobster.jpg)
 
-***Figure 2: Cooked California Lobster.*** *A cooked California Spiny Lobster on a dish with butter and lemons. (Credit: [Sea Grant California](https://caseagrant.ucsd.edu/seafood-profiles/spiny-lobster))*
+***Figure 2: Cooked California Spiny Lobster.*** *A cooked California Spiny Lobster on a dish with butter and lemons. (Credit: [Sea Grant California](https://caseagrant.ucsd.edu/seafood-profiles/spiny-lobster))*
 
 ![](lobster sites.png)
 
@@ -58,7 +58,7 @@ https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0))*
 
 ### DATA AND METHODS
 
-Data for Spiny Lobster abundance and location from 2012 - 2018 were collected and provided by the *(Credit: [LTER Network Data Portal](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=77&revision=newest))*. Data on Spiny Lobster size and abundance (individuals) is collected annually by divers in the late summer before the start of the fishing season at five SBC LTER long term kelp forest study sites with two sites within Marine Protected Area’s (MPA): Naples and Isla Vista, and three outside: Arroyo Quemado, Mohawk, and Carpinteria. The variables of interest and analyzed for the report were lobster abundance for each year, lobster size in millimeters, site locations categorized within or outside MPA’s, called MPA’s and non-MPAs, respectively. Mean lobster size distributions (mm) was compared for year 2012 vs 2018 and for site location, MPA vs non-MPA by two-sample, two-sided t-tests (α = 0.05 throughout) as well as applying cohen’s d index to evaluate effect size between groups. All analyses and figures were prepared using R Software Version 1.2.1335.
+Data for Spiny Lobster abundance and location from 2012 - 2018 were collected and provided by [SBC LTER](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=77&revision=newest). Data on California Spiny Lobster size and abundance (individuals) is collected annually by divers in the late summer before the start of the fishing season at five SBC LTER long term kelp forest study sites with two sites within MPAs: Naples and Isla Vista, and three outside of MPAs: Arroyo Quemado, Mohawk, and Carpinteria. The variables of interest and analyzed for the report were lobster abundance for each year, lobster size in millimeters, and site locations categorized within or outside of MPA’s, called MPA’s and non-MPAs, respectively. Mean lobster size distributions (mm) was compared for year 2012 vs 2018 and for site location, MPA vs non-MPA by two-sample, two-sided t-tests (α = 0.05 throughout) as well as applying cohen’s d index to evaluate effect size between groups. All analyses and figures were prepared using R Software Version 1.2.1335.
 
 <br>
 
@@ -117,7 +117,7 @@ ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
 *Lobster counts at the Arroyo Quemado, Carpinteria, Isla Vista, Mohawk, and Naples study sites between the years of 2012 - 2018. Data: [Reed D. 2019.](
 https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
 
-Spiny Lobster abundance data was compared annually, starting in 2012 - 2018, across each of the five sites (Figure 1). Spiny Lobster abundance at sites, Isla Vista and Naples, within the MPA show an increase in Spiny Lobster abundance collected over time. This increase can be an indicator of MPA’s significant purpose in preserving Spiny Lobster populations since these predators play an important role in maintaining ecological processes of kelp forests. Spiny Lobster counts collected within sites outside MPA’s are consistently low, with the exception of Carpinteria in 2017 (where total counts = 705) but then dropped significantly in 2018. This lack of protection for these sites can be an indicator that there is a lot of influence by human activity for these non-MPA sites.
+California Spiny Lobster abundance data was compared annually, from 2012 to 2018, across each of the five sites (Figure 4). Spiny Lobster abundance at the two sites with MPAs, Isla Vista and Naples,show an increase in Spiny Lobster abundance collected over time. This increase can be an indicator of MPA’s significant purpose in preserving California Spiny Lobster populations since these predators play an important role in maintaining ecological processes of kelp forests. California Spiny Lobster counts collected within sites outside of MPA’s are consistently low, with the exception of Carpinteria in 2017 (where total counts = 705) but then dropped significantly in 2018. This lack of protection for the non-MPA sites can be an indicator that there is a lot of influence by human activity.
 
 
 #### B. Lobster size distribution shifts in 2012 and 2018.
@@ -152,9 +152,9 @@ ggplot(data = lobster_size) +
 *Lobster size distribution of observations across the MPA Sites: Isla Vista & Naples; and non-MPA Sites: Arroyo Quemado, Carpinteria, Mohawk for the years 2012 and 2018. Data: [Reed D. 2019.](
 https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
 
-Spiny Lobster counts collected are significantly higher for 2018 (n_MPA2018 = 1244, n_nonMPA = 561,  than in 2012 (n_MPA = 32, n_nonMPA = 199), but that does not matter since a minimum sample of 30 is sufficient enough to compare across these groups. The proportion of size distribution shifts of Spiny Lobsters for sites within MPA’s saw a comeback in larger lobster populations from 2012 to 2018, while sites outside MPA’s saw a decrease in larger lobster populations from 2012 to 2018. Smaller lobsters within MPA sites also experienced a population increase as well.  
+California Spiny Lobster counts collected are significantly higher for 2018 (n_MPA2018 = 1244, n_nonMPA = 561),  than in 2012 (n_MPA = 32, n_nonMPA = 199), but both have minimum samples of over 30 observations, which is sufficient enough to compare across these groups. The proportion of size distribution for sites within MPA’s saw a comeback in larger lobster populations from 2012 to 2018, while sites outside MPA’s saw a decrease in larger lobster populations from 2012 to 2018. Smaller lobsters within MPA sites also experienced a population increase.  
 
-Although Mohawk is a site outside of an MPA site, Mohawk has a fairly symmetrical distribution of lobster size for 2012 and 2018. Mohawk may have unique physical features where human activity is not impacting the Mohawk population as drammatically compared to the other sites outside MPA's. 
+Although Mohawk is outside of an MPA, it has a fairly symmetrical distribution of lobster size between 2012 and 2018. Mohawk may have unique physical features where human activity is not impacting the  population as drammatically compared to the other sites not in MPA's. 
 
 
 #### C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
@@ -272,9 +272,9 @@ Mean sizes of lobsters found within the three non-MPA sites decreased by 1.3mm (
 
 ### SUMMARY
 
-- Lobster populations within MPA sites show a steady increase overtime while lobster populations outside MPA sites are consistently at low levels (Figure 4).
-- The difference of mean sizes of lobsters within MPA sites between 2012 and 2018 was significant and substantive.
-- The difference in magnitudes of lobster size between MPA sites and non-MPA sites for 2012 and 2018 is noticeable upon further review of both groups.
+- Lobster populations within MPA sites increased overtime while lobster populations outside MPA sites were consistently at lower levels (Figure 4).
+- The difference between mean sizes for lobsters within MPA sites between 2012 and 2018 was significant and substantive.
+- There is a substantive difference in lobster sizes between MPA sites and non-MPA sites for 2012 and 2018.
 
 <br>
 
