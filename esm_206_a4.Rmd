@@ -240,20 +240,23 @@ size_2018_d <- effsize::cohen.d(mpa_2018$size_mm, nonmpa_2018$size_mm, na.rm = T
 
 size_mpa_ttest <- t.test(mpa_2012$size_mm, mpa_2018$size_mm, paired = FALSE)
 # If P value is lower than alpha (0.5), which it is, we reject the null hypothesis and confirm the alternative hypothesis as it indicates strong evidence against the null hypothesis.
+
 size_mpa_d <- effsize::cohen.d(mpa_2012$size_mm, mpa_2018$size_mm, na.rm = TRUE)
 # Effect size is 0.87, which is a large effect size, thus the difference is easily noticeable. Cohen's D shows that the P value's rejection of the null hypothesis is easily noticeable.
 
 size_nonmpa_ttest <- t.test(nonmpa_2012$size_mm, nonmpa_2018$size_mm, paired = FALSE)
 # If P value is lower than alpha (0.5), which it is NOT, thus we fail to reject the null hypothesis as it indicates weak evidence against the null hypothesis.
+
 size_nonmpa_d <- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.rm = TRUE)
 # Effect size is 0.12, which is a small effect size, thus the difference between the samples is not easily noticeable. Cohen's D confirms that the uncertainty in the rejection of the null hypothesis, as indicated by the P value, is small.
 ```
 
-The mean size of lobsters found within the MPA sites increased by 10.2 millimeters (mm) (from `r round(mean_mpa_2012, 1)`mm to `r round(mean_mpa_2018, 1)`mm) between 2012 and 2018. Between the two years, the size increase is statistically significant (two-sided t-test, t(`r round(size_mpa_ttest$parameter, 1)`) = `r round(size_mpa_ttest$statistic, 1)`, *p* = `r round(size_mpa_ttest$p.value, 1)`) and the effect size is large (Cohen's d = `r round(size_mpa_d$estimate, 2)`). This indicates that from 2012 to 2018, the mean lobster size increase of 10.2mm was significant and substantive.
+The mean size of lobsters found within the MPA sites increased by 10.2 millimeters (mm) (from `r round(mean_mpa_2012, 1)`mm to `r round(mean_mpa_2018, 1)`mm) between 2012 and 2018. Between the two years, the size increase is statistically significant (two-sided t-test, t(`r round(size_mpa_ttest$parameter, 1)`) = `r round(size_mpa_ttest$statistic, 1)`, *p* = `r round(size_mpa_ttest$p.value, 1)`) and the effect size is large (Cohen's d = `r round(size_mpa_d$estimate, 2)`). This indicates that from 2012 to 2018, the mean lobster size increase at MPA sites of 10.2mm was significant and substantive.
 
-Mean sizes of lobsters found within the three non-MPA sites decreased by 1.3mm (from 74.9mm to 73.6mm) between 2012 and 2018. 
+Mean sizes of lobsters found within the three non-MPA sites decreased by 1.3mm (from `r round(mean_nonmpa_2012, 1)` mm to `r round(mean_nonmpa_2018, 1)`mm) between 2012 and 2018. Between the two years, the size increase is not statistically significant (two-sided t-test, t(`r round(size_nonmpa_ttest$parameter, 1)`) = `r round(size_nonmpa_ttest$statistic, 1)`, *p* = `r round(size_nonmpa_ttest$p.value)`) and the effect size is small (Cohen's d = `r round(size_nonmpa_d$estimate, 2)`) This indicates that from 2012 to 2018, the mean lobster size decrease at non-MPA sites of 1.3mm was not significant nor substantive.
 
 
+<br>
 
 *Null Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are the same.
 
