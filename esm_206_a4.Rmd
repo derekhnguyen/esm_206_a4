@@ -181,6 +181,7 @@ lobster_size_table <- lobster_mean_size %>%
   mutate_if(is.numeric, round, 1)
 ```
 
+
 ***Table 1: Lobster Size Metrics***
 *Means, Standard Deviations, and Sample Sizes of the California Spiny Lobsters for the years 2012 and 2018 between the MPA and non-MPA Sites. Data: [Reed D. 2019.](
 https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
@@ -188,7 +189,7 @@ https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
 lobster_size_table %>% 
   kable(col.names = c("Year",
                       "MPA",
-                      "Mean",
+                      "Mean (mm)",
                       "Standard Deviation",
                       "Sample Size")) %>% 
           kable_styling(bootstrap_options = "striped",
@@ -200,6 +201,7 @@ lobster_size_table %>%
                    color = "black")
 ```
 
+
 ```{r, echo = FALSE}
 nonmpa_2012 <- lobster_mean_size %>% 
   filter(year =="2012", mpa == "non-MPA") 
@@ -210,6 +212,19 @@ mpa_2012 <- lobster_mean_size %>%
 mpa_2018 <- lobster_mean_size %>% 
    filter(year == "2018", mpa == "MPA")
 
+mean_mpa_2012 <- mean(mpa_2012$size_mm, na.rm = TRUE) 
+mean_mpa_2018 <- mean(mpa_2018$size_mm, na.rm = TRUE) 
+mean_nonmpa_2012 <- mean(nonmpa_2012$size_mm, na.rm = TRUE)
+mean_nonmpa_2018 <- mean(nonmpa_2018$size_mm, na.rm = TRUE)
+sd_mpa_2012 <- sd(mpa_2012$size_mm, na.rm = TRUE)
+sd_mpa_2018 <- sd(mpa_2018$size_mm, na.rm = TRUE)
+sd_nonmpa_2012 <- sd(nonmpa_2012$size_mm, na.rm = TRUE)
+sd_nonmpa_2018 <- sd(nonmpa_2018$size_mm, na.rm = TRUE)
+
+n_mpa_2012 <- sum(!is.na(mpa_2012$size_mm))
+n_mpa_2018 <- sum(!is.na(mpa_2018$size_mm))
+n_nonmpa_2012 <- sum(!is.na(nonmpa_2012$size_mm))
+n_nonmpa_2018 <- sum(!is.na(nonmpa_2018$size_mm))
 ```
 
 ```{r, echo = FALSE}
@@ -233,6 +248,12 @@ size_nonmpa_ttest <- t.test(nonmpa_2012$size_mm, nonmpa_2018$size_mm, paired = F
 size_nonmpa_d <- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.rm = TRUE)
 # Effect size is 0.12, which is a small effect size, thus the difference between the samples is not easily noticeable. Cohen's D confirms that the uncertainty in the rejection of the null hypothesis, as indicated by the P value, is small.
 ```
+
+The mean size of lobsters found within the MPA sites increased by 10.2 millimeters (mm) (from `r round(mean_mpa_2012, 1)`mm to `r round(mean_mpa_2018, 1)`mm) between 2012 and 2018. Between the two years, the size increase is statistically significant (two-sided t-test, t(`r round(size_mpa_ttest$parameter, 1)`) = `r round(size_mpa_ttest$statistic, 1)`, *p* = `r round(size_mpa_ttest$p.value, 1)`) and the effect size is large (Cohen's d = `r round(size_mpa_d$estimate, 2)`). This indicates that from 2012 to 2018, the mean lobster size increase of 10.2mm was significant and substantive.
+
+Mean sizes of lobsters found within the three non-MPA sites decreased by 1.3mm (from 74.9mm to 73.6mm) between 2012 and 2018. 
+
+
 
 *Null Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are the same.
 
