@@ -178,6 +178,9 @@ lobster_size_table <- lobster_mean_size %>%
   mutate_if(is.numeric, round, 1)
 ```
 
+*Null Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are the same.
+
+*Alternate Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are not the same.
 
 ***Table 1: Lobster Size Metrics***
 *Means, Standard Deviations, and Sample Sizes of the California Spiny Lobsters for the years 2012 and 2018 between the MPA and non-MPA Sites. Data: [Reed D. 2019.](
@@ -205,9 +208,6 @@ For non-MPA sites, lobster sizes decreased from 2012 to 2018 and for MPA sites, 
 The small sample sizes for 2012 may be a factor in why the average sizes for the sites are smaller.
 
 
-*Null Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are the same.
-
-*Alternate Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are not the same.
 
 ```{r, echo = FALSE}
 nonmpa_2012 <- lobster_mean_size %>% 
