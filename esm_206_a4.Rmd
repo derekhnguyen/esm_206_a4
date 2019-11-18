@@ -272,10 +272,11 @@ size_nonmpa_d <- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.r
 
 ##### Lobster size differences between MPA and non-MPA sites for 2012 only
 
+The mean lobster sizes between the MPA (`r round(mean_mpa_2012, 1)`) and non-MPA (`r round(mean_nonmpa_2012)`) sites in 2012 was 7.5 millimeters (mm). Between the MPA and non-MPA sites, the size difference is statistically significant (two-sided t-test, t(`r round(size_2012_ttest$parameter, 1)`) = `r round(size_2012_ttest$statistic, 1)`, *p* = `r round(size_2012_ttest$p.value, 1)`) and the effect size is moderate (Cohen's d = `r round(size_2012_d$estimate, 2)`). This indicates that between the MPA and non-MPA sites, the mean lobster size difference of 7.5mm is significant and moderately substantive.
 
 ##### Lobster size differences between MPA and non-MPA sites for 2018 only
 
-
+The mean lobster sizes between the MPA (`r round(mean_mpa_2018, 1)`) and non-MPA (`r round(mean_nonmpa_2018)`) sites in 2018 was 4.0 millimeters (mm). Between the MPA and non-MPA sites, the size difference is statistically significant (two-sided t-test, t(`r round(size_2018_ttest$parameter, 1)`) = `r round(size_2018_ttest$statistic, 1)`, *p* = `r round(size_2018_ttest$p.value, 1)`) and the effect size is small (Cohen's d = `r round(size_2018_d$estimate, 2)`). This indicates that between the MPA and non-MPA sites, the mean lobster size difference of 4.0mm is significant and but not very substantive.
 
 ##### Mean size differences in 2012 and 2018 for MPA Sites only
 The mean size of lobsters found within the MPA sites increased by 10.2 millimeters (mm) (from `r round(mean_mpa_2012, 1)`mm to `r round(mean_mpa_2018, 1)`mm) between 2012 and 2018. Between the two years, the size increase is statistically significant (two-sided t-test, t(`r round(size_mpa_ttest$parameter, 1)`) = `r round(size_mpa_ttest$statistic, 1)`, *p* = `r round(size_mpa_ttest$p.value, 1)`) and the effect size is large (Cohen's d = `r round(size_mpa_d$estimate, 2)`). This indicates that from 2012 to 2018, the mean lobster size increase at MPA sites of 10.2mm was significant and substantive.
