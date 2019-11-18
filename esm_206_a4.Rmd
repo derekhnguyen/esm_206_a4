@@ -100,45 +100,6 @@ lobster_ysite$site[lobster_ysite$site == "NAPL"] <- "Naples"
 ```
 
 #### Results A: Visually explore changes in annual lobster abundance (counts) by site
-```{r, echo = FALSE}
-ggplot(lobster_ysite, aes(x = year, y = total_count),
-       show.legend = FALSE) +
-  geom_line(aes(color = MPA),
-            show.legend = FALSE) +
-  facet_wrap(~site) +
-  geom_point(aes(color = MPA, shape = MPA)) +
-  scale_x_continuous(lim = c(2012, 2021), expand = c(0,0)) +
-  scale_y_continuous(lim = c(0, 1000), expand = c(0,0)) +
-  theme_minimal() +
-  labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
-       subtitle = "MPAs: IVEE & NAPL",
-       x = "Year",
-       y = "Total Lobster Observations")  +
-  geom_dl(aes(label = site, color = MPA), method = list("last.points", cex = .65, hjust = -.10))
-            
-```
-***Figure 3: Annual Lobster Abundance.*** 
-*Lobster counts at the five study sites between the years of 2012 - 2018 as measured by SBC LTER.*
-```{r, echo = FALSE}
-ggplot(lobster_ysite, aes(x = year, y = total_count),
-       show.legend = FALSE) +
-  geom_line(aes(color = site),
-            show.legend = FALSE) +
-  geom_point(aes(color = site, shape = site),
-             show.legend = FALSE) +
-  scale_x_continuous(lim = c(2012, 2019.5), expand = c(0,0)) +
-  scale_y_continuous(lim = c(0, 1000), expand = c(0,0)) +
-  theme_bw() +
-  labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
-       subtitle = "MPAs: IVEE & NAPL",
-       x = "Year",
-       y = "Total Lobster Observations")  +
-  geom_dl(aes(label = site, color = site), method = list("last.points", cex = .65, hjust = -.2))
-```
-***Figure 3: Annual Lobster Abundance.*** 
-*Lobster counts at the five study sites between the years of 2012 - 2018 as measured by SBC LTER.*
- 
-
 
 ```{r, echo = FALSE}
 ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
