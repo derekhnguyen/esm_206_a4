@@ -58,8 +58,6 @@ https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0))*
 
 ### DATA AND METHODS
 
-Data for Spiny Lobster abundance and location from 2012 - 2018 were collected and provided by the *(Credit: [LTER Network Data Portal](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=77&revision=newest))*. Data on Spiny Lobster size and abundance (individuals) is collected annually by divers in the late summer before the start of the fishing season at five SBC LTER long term kelp forest study sites with two sites within Marine Protected Area’s (MPA): Naples and Isla Vista, and three outside: Arroyo Quemado, Mohawk, and Carpinteria. The variables of interest and analyzed for the report were lobster abundance for each year, lobster size in millimeters, site locations categorized within or outside MPA’s, called MPA’s and non-MPAs, respectively. Mean lobster size distributions (mm) was compared for year 2012 vs 2018 and for site location, MPA vs non-MPA by two-sample, two-sided t-tests (α = 0.05 throughout) as well as applying cohen’s d index to evaluate effect size between groups. All analyses and figures were prepared using R Software Version 1.2.1335.
-
 <br>
 
 ### RESULTS
@@ -103,7 +101,7 @@ lobster_ysite$site[lobster_ysite$site == "NAPL"] <- "Naples"
 ```
 
 
-#### A: Changes in annual lobster abundance (counts) by site
+#### Results A: Visually explore changes in annual lobster abundance (counts) by site
 
 ```{r, echo = FALSE}
 ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
@@ -118,15 +116,17 @@ ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
        y = "Total Lobster Observations",
        fill = "Site")
 ```
-
 ***Figure 4: Annual Lobster Abundance.*** 
 *Lobster counts at the Arroyo Quemado, Carpinteria, Isla Vista, Mohawk, and Naples study sites between the years of 2012 - 2018. Data: [Reed D. 2019.](
 https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
 
+<<<<<<< HEAD
 Spiny Lobster abundance data was compared annually, starting in 2012 - 2018, across each of the five sites (Figure 1). Spiny Lobster abundance at sites, Isla Vista and Naples, within the MPA show an increase in Spiny Lobster abundance collected over time. This increase can be an indicator of MPA’s significant purpose in preserving Spiny Lobster populations since these predators play an important role in maintaining ecological processes of kelp forests. Spiny Lobster counts collected within sites outside MPA’s are consistently low, with the exception of Carpinteria in 2017 (where total counts = 705) but then dropped significantly in 2018. This lack of protection for these sites can be an indicator that there is a lot of influence by human activity for these non-MPA sites.
+=======
+>>>>>>> c5cfaa18e2cfccdcdc926e1ea4704c74f2df63ad
 
 
-#### B. Lobster size distribution shifts in 2012 and 2018.
+#### Results B. Visually explore lobster size distribution shifts by comparing lobster sizes in 2012 and 2018.
 
 ```{r, echo = FALSE}
 lobster_size <- lobster_tidy %>% 
@@ -148,27 +148,23 @@ lobster_size$site[lobster_size$site == "NAPL"] <- "Naples"
 
 ```{r, echo = FALSE}
 ggplot(data = lobster_size) +
-  geom_histogram(aes(x = size_mm, fill = site, alpha = 0.9, color = site),
-                 binwidth = 8,
+  geom_histogram(aes(x = size_mm, fill = site, alpha = 0.7, color = site),
+                 binwidth = 6,
                  show.legend = FALSE) +
   facet_grid(year~site, scales = "free") +
-  theme_dark() +
+  theme_minimal() +
   scale_y_continuous(expand = c(0,0)) +
   scale_x_continuous(expand = c(0,0)) +
   labs(x = "Lobster Size (mm)",
        y = "Total Lobster Observations")
 ```
-
 ***Figure 5: Lobster Size Distributions Across 5 Study Sites***
-*Lobster size distribution of observations across the MPA Sites: Isla Vista & Naples; and non-MPA Sites: Arroyo Quemado, Carpinteria, Mohawk for the years 2012 and 2018. Data: [Reed D. 2019.](
+*Lobster size distribution of observations across the Arroyo Quemado, Carpinteria, Isla Vista, Mohawk, and Naples study sites for the years 2012 and 2018. Data: [Reed D. 2019.](
 https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
 
-Spiny Lobster counts collected are significantly higher for 2018 (n_MPA2018 = 1244, n_nonMPA = 561,  than in 2012 (n_MPA = 32, n_nonMPA = 199), but that does not matter since a minimum sample of 30 is sufficient enough to compare across these groups. The proportion of size distribution shifts of Spiny Lobsters for sites within MPA’s saw a comeback in larger lobster populations from 2012 to 2018, while sites outside MPA’s saw a decrease in larger lobster populations from 2012 to 2018. Smaller lobsters within MPA sites also experienced a population increase as well.  
-
-Although Mohawk is a site outside of an MPA site, Mohawk has a fairly symmetrical distribution of lobster size for 2012 and 2018. Mohawk may have unique physical features where human activity is not impacting the Mohawk population as drammatically compared to the other sites outside MPA's. 
 
 
-#### C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
+#### Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
 
 ```{r, echo = FALSE}
 lobster_mean_size <- lobster_tidy %>% 
@@ -209,16 +205,6 @@ lobster_size_table %>%
                    color = "black")
 ```
 
-In 2012, lobster samples collected for MPA and non-MPA sites were far smaller than the lobster samples collected in 2018. 
-
-For non-MPA sites, lobster sizes decreased from 2012 to 2018 and for MPA sites, average lobster sizes increased overtime.
-
-The small sample sizes for 2012 may be a factor in why the average sizes for the sites are smaller.
-
-
-*Null Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are the same.
-
-*Alternate Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are not the same.
 
 ```{r, echo = FALSE}
 nonmpa_2012 <- lobster_mean_size %>% 
@@ -268,6 +254,7 @@ size_nonmpa_ttest <- t.test(nonmpa_2012$size_mm, nonmpa_2018$size_mm, paired = F
 size_nonmpa_d <- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.rm = TRUE)
 # Effect size is 0.12, which is a small effect size, thus the difference between the samples is not easily noticeable. Cohen's D confirms that the uncertainty in the rejection of the null hypothesis, as indicated by the P value, is small.
 ```
+<<<<<<< HEAD
 <br>
 
 ##### Lobster size differences between MPA and non-MPA sites for 2012 only
@@ -277,22 +264,24 @@ The mean lobster sizes between the MPA (`r round(mean_mpa_2012, 1)`) and non-MPA
 ##### Lobster size differences between MPA and non-MPA sites for 2018 only
 
 The mean lobster sizes between the MPA (`r round(mean_mpa_2018, 1)`) and non-MPA (`r round(mean_nonmpa_2018)`) sites in 2018 was 4.0 millimeters (mm). Between the MPA and non-MPA sites, the size difference is statistically significant (two-sided t-test, t(`r round(size_2018_ttest$parameter, 1)`) = `r round(size_2018_ttest$statistic, 1)`, *p* = `r round(size_2018_ttest$p.value, 1)`) and the effect size is small (Cohen's d = `r round(size_2018_d$estimate, 2)`). This indicates that between the MPA and non-MPA sites, the mean lobster size difference of 4.0mm is significant and but not very substantive.
+=======
 
-##### Mean size differences in 2012 and 2018 for MPA Sites only
 The mean size of lobsters found within the MPA sites increased by 10.2 millimeters (mm) (from `r round(mean_mpa_2012, 1)`mm to `r round(mean_mpa_2018, 1)`mm) between 2012 and 2018. Between the two years, the size increase is statistically significant (two-sided t-test, t(`r round(size_mpa_ttest$parameter, 1)`) = `r round(size_mpa_ttest$statistic, 1)`, *p* = `r round(size_mpa_ttest$p.value, 1)`) and the effect size is large (Cohen's d = `r round(size_mpa_d$estimate, 2)`). This indicates that from 2012 to 2018, the mean lobster size increase at MPA sites of 10.2mm was significant and substantive.
 
-
-##### Mean size differences in 2012 and 2018 for non-MPA sites only
 Mean sizes of lobsters found within the three non-MPA sites decreased by 1.3mm (from `r round(mean_nonmpa_2012, 1)` mm to `r round(mean_nonmpa_2018, 1)`mm) between 2012 and 2018. Between the two years, the size increase is not statistically significant (two-sided t-test, t(`r round(size_nonmpa_ttest$parameter, 1)`) = `r round(size_nonmpa_ttest$statistic, 1)`, *p* = `r round(size_nonmpa_ttest$p.value)`) and the effect size is small (Cohen's d = `r round(size_nonmpa_d$estimate, 2)`) This indicates that from 2012 to 2018, the mean lobster size decrease at non-MPA sites of 1.3mm was not significant nor substantive.
+>>>>>>> c5cfaa18e2cfccdcdc926e1ea4704c74f2df63ad
 
+
+<br>
+
+*Null Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are the same.
+
+*Alternate Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are not the same...
 
 <br>
 
 ### SUMMARY
 
-- Lobster populations within MPA sites show a steady increase overtime while lobster populations outside MPA sites are consistently at low levels (Figure 4).
-- The difference of mean sizes of lobsters within MPA sites between 2012 and 2018 was significant and substantive.
-- The difference in magnitudes of lobster size between MPA sites and non-MPA sites for 2012 and 2018 is noticeable upon further review of both groups.
 
 <br>
 
