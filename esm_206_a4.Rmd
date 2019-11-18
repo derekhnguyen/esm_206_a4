@@ -6,10 +6,10 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, eval = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
 ```
 
-```{r, echo = FALSE, include = FALSE, eval = FALSE}
+```{r, echo = FALSE, include = FALSE, eval=FALSE}
 install.packages("directlabels")
 install.packages("viridis")
 install.packages("lmtest", repos = "http://cran.us.r-project.org")
@@ -18,7 +18,7 @@ install.packages("kableExtra")
 ```
 
 
-```{r}
+```{r, echo = FALSE, include = FALSE}
 library(tidyverse)
 library(janitor)
 library(tidyr)
@@ -30,17 +30,17 @@ library(effsize)
 library(kableExtra)
 ```
 
-###INTRODUCTION
+### INTRODUCTION
 
-The California Spiny Lobster, *Panulirus interruptus*, is a Decapod crustacean that has a habitat that spans from the Monterey Bay, California to Baja California, Mexico (Sea Grant California XXXX). The California Spiny Lobster is one of the largest spiny lobsters in the world with males being able to grow up to three feet long and weigh up to 26 pounds. Fishing of California Lobster is regulated by the California Department of Fish and Wildlife and have an open season from October through March (Sea Grant California and California Department of Fish and Wildlife XXXX). The California Spiny Lobster currently has a stable population and is caught by  commercial fisheries, hoop-net based recreational fishers, and dive-based recreational fishers (Sea Grant California XXXX).
+The California Spiny Lobster, *Panulirus interruptus*, is a decapod crustacean that has a habitat that spans from the Monterey Bay, California to Baja California, Mexico (Sea Grant California XXXX). The California Spiny Lobster is one of the largest spiny lobsters in the world with males capable of growing up to three feet long and weighing up to 26 pounds. Fishing of California Spiny Lobster is regulated by the California Department of Fish and Wildlife and has an open season from October through March (Sea Grant California and California Department of Fish and Wildlife XXXX).
 
-Data on California Spiny Lobsters has been collected off of the coast of Santa Barbara by the Santa Barbara Coastal Term Ecological Research (SBC LTER), an interdisciplinary program based at the University of California, Santa Barbara Marine Science Institute. SB LTER has been collecting data on size, abundance, and fishing pressure of California Spiny Lobster at five study sites along the Santa Barbara Channel since 2012. Two of the sites, Naples and Isla Vista, are within Marine Protected Areas (MPAs) and three of the sites, Arroyo Quemado, Mohawk, and Carpinteria, are otuside of MPAs (Reed D. 2019). In this report, we will be analyzing the changes in lobster sizes between the years of 2012 and 2018 and across the five different study sites.
+Data on California Spiny Lobsters has been collected off of the coast of Santa Barbara by the Santa Barbara Coastal Term Ecological Research (SBC LTER), an interdisciplinary program based at the University of California, Santa Barbara Marine Science Institute. SB LTER has been collecting data on size, abundance, and fishing pressure of California Spiny Lobster at five study sites along the Santa Barbara Channel since 2012. Two of the sites, Naples and Isla Vista, are within Marine Protected Areas (MPAs) and three of the sites, Arroyo Quemado, Mohawk, and Carpinteria, are otuside of MPAs (Reed D. 2019). In an effort to investigate lobster size differences or similarities between the study sites within an MPA and those outside of an MPA, this report will analyze lobster sizes between the years of 2012 and 2018 and across the five different study sites.
 
 
 ![](spiny_guy.png)
 
 
-**Figure 1**: Spiny Lobster *(Credit: [Alamy] (https://www.alamy.com/stock-photo/california-spiny-lobster.html))*
+**Figure 1: Spiny Lobster.** Picture of a California Spiny Lobster *(Credit: [Alamy] (https://www.alamy.com/stock-photo/california-spiny-lobster.html))*
 
 
 
@@ -48,33 +48,33 @@ Data on California Spiny Lobsters has been collected off of the coast of Santa B
 
 ![](lobster sites.png)
 
-**Figure 2.** The five sampling locations *(Credit: [EDI Data Portal](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=77&revision=newest))*
+**Figure 2. Study Sites.** The five California Spiny Lobster study sites where data is collected by SBC LTER.  *(Credit: [EDI Data Portal](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=77&revision=newest))*
 
 
 
 
-###DATA AND METHODS
+### DATA AND METHODS
 
 
-###RESULTS
+### RESULTS
 
 
 
 
-```{r}
+```{r, include = FALSE, echo=FALSE}
 lobster_abundance <- read_csv("lobster_abundance_sbc_lter.csv",
                               na = "-99999") %>% 
   clean_names() 
 ```
 
-```{r}
+```{r, include=FALSE, echo=FALSE}
 lobster_tidy <- lobster_abundance %>% 
   tidyr::uncount(count)
 ```
 
 
 
-```{r}
+```{r, include = FALSE, echo = FALSE}
 lobster_ysite <- lobster_tidy %>% 
   select(year, site, size_mm) %>% 
   count(year, site) %>%  
@@ -85,7 +85,7 @@ lobster_ysite <- lobster_tidy %>%
 
 ```
 
-```{r}
+```{r, include = FALSE, echo = FALSE}
 colnames(lobster_ysite)[colnames(lobster_ysite) =="n"] <- "total_count"
 
 lobster_ysite$site[lobster_ysite$site == "AQUE"] <- "Arroyo Quemado"
@@ -99,8 +99,8 @@ lobster_ysite$site[lobster_ysite$site == "MOHK"] <- "Mohawk"
 lobster_ysite$site[lobster_ysite$site == "NAPL"] <- "Naples"
 ```
 
-#Results A: Visually explore changes in annual lobster abundance (counts) by site
-```{r}
+#### Results A: Visually explore changes in annual lobster abundance (counts) by site
+```{r, echo = FALSE}
 ggplot(lobster_ysite, aes(x = year, y = total_count),
        show.legend = FALSE) +
   geom_line(aes(color = MPA),
@@ -113,13 +113,13 @@ ggplot(lobster_ysite, aes(x = year, y = total_count),
   labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
        subtitle = "MPAs: IVEE & NAPL",
        x = "Year",
-       y = "Total Lobster Observations",
-       caption = "Figure 1: Lobster Abundance at 5 sites for year 2012 - 2018")  +
+       y = "Total Lobster Observations")  +
   geom_dl(aes(label = site, color = MPA), method = list("last.points", cex = .65, hjust = -.10))
             
 ```
- 
-```{r}
+***Figure 3: Annual Lobster Abundance.*** 
+*Lobster counts at the five study sites between the years of 2012 - 2018 as measured by SBC LTER.*
+```{r, echo = FALSE}
 ggplot(lobster_ysite, aes(x = year, y = total_count),
        show.legend = FALSE) +
   geom_line(aes(color = site),
@@ -132,15 +132,15 @@ ggplot(lobster_ysite, aes(x = year, y = total_count),
   labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
        subtitle = "MPAs: IVEE & NAPL",
        x = "Year",
-       y = "Total Lobster Observations",
-       caption = "Figure 1: Lobster Abundance at 5 sites for year 2012 - 2018")  +
+       y = "Total Lobster Observations")  +
   geom_dl(aes(label = site, color = site), method = list("last.points", cex = .65, hjust = -.2))
 ```
- 
+***Figure 3: Annual Lobster Abundance.*** 
+*Lobster counts at the five study sites between the years of 2012 - 2018 as measured by SBC LTER.*
  
 
 
-```{r}
+```{r, echo = FALSE}
 ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
        show.legend = FALSE) +
   geom_col(aes(fill = MPA),
@@ -153,14 +153,14 @@ ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
        subtitle = "MPAs: Isla Vista and Naples",
        x = "Year",
        y = "Total Lobster Observations",
-       caption = "Figure 1: Lobster Abundance at 5 sites for year 2012 - 2018",
        fill = "Site")
 ```
+***Figure 3: Annual Lobster Abundance.*** 
+*Lobster counts at the five study sites between the years of 2012 - 2018 as measured by SBC LTER.*
 
+#### Results B. Visually explore lobster size distribution shifts by comparing lobster sizes in 2012 and 2018.
 
-Results B. Visually explore lobster size distribution shifts by comparing lobster sizes in 2012 and 2018.
-
-```{r}
+```{r, echo = FALSE}
 lobster_size <- lobster_tidy %>% 
   select(year, site, size_mm) %>% 
   filter(year %in% c(2012, 2018)) %>% 
@@ -179,7 +179,7 @@ lobster_size$site[lobster_size$site == "NAPL"] <- "Naples"
 ```
 
 Histogram for Results B
-```{r}
+```{r, echo = FALSE}
 ggplot(data = lobster_size) +
   geom_histogram(aes(x = size_mm, fill = site, alpha = 0.7, color = site),
                  binwidth = 6,
@@ -189,12 +189,14 @@ ggplot(data = lobster_size) +
   scale_y_continuous(expand = c(0,0)) +
   scale_x_continuous(expand = c(0,0)) +
   labs(title = "Lobster Size Distributions across 5 Sites",
-       caption = "Figure 2: Lobster Size for 2012 & 2018",
        subtitle = "2012 & 2018",
        x = "Lobster Size (mm)",
        y = "Total Lobster Observations")
 ```
-```{r}
+***Figure 4: Lobster Size for 2012 & 2018***
+*Lobster size distribution of observations across the five SBC LTER study sites for the years 2012 and 2018.*
+
+```{r, echo = FALSE}
 ggplot(data = lobster_size) +
   geom_density(aes(fill = year, x = size_mm),
                alpha = 0.5) +
@@ -204,9 +206,9 @@ ggplot(data = lobster_size) +
 ```
 
 
-Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
+#### Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
 
-```{r}
+```{r, echo = FALSE}
 lobster_mean_size <- lobster_tidy %>% 
   mutate(mpa = case_when(
     site %in% c("IVEE", "NAPL") ~ "MPA",
@@ -218,7 +220,7 @@ lobster_mean_size <- lobster_tidy %>%
 
 
 
-```{r}
+```{r, echo = FALSE, message= FALSE}
 lobster_size_table <- lobster_mean_size %>% 
   summarize(mean = mean(size_mm, na.rm = TRUE),
             sd = sd(size_mm, na.rm = TRUE),
@@ -227,7 +229,7 @@ lobster_size_table <- lobster_mean_size %>%
 ```
 
 
-```{r}
+```{r, echo = FALSE}
 lobster_size_table %>% 
   kable(col.names = c("Year",
                       "MPA",
@@ -244,7 +246,7 @@ lobster_size_table %>%
                    color = "black")
 ```
 
-```{r}
+```{r, echo = FALSE}
 nonmpa_2012 <- lobster_mean_size %>% 
   filter(year =="2012", mpa == "non-MPA") 
 nonmpa_2018 <- lobster_mean_size %>% 
@@ -256,7 +258,7 @@ mpa_2018 <- lobster_mean_size %>%
 
 ```
 
-```{r}
+```{r, echo = FALSE}
 size_2012_ttest <- t.test(mpa_2012$size_mm, nonmpa_2012$size_mm, paired = FALSE)
 # If P value is lower than alpha (0.5), which it is, we reject the null hypothesis and confirm the alternative hypothesis as it indicates strong evidence against the null hypothesis.
 size_2012_d <- effsize::cohen.d(mpa_2012$size_mm, nonmpa_2012$size_mm, na.rm = TRUE)
@@ -285,8 +287,8 @@ size_nonmpa_d <- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.r
 
 
 
-SUMMARY
+### SUMMARY
 
--testing
 
-REFERENCES
+
+### REFERENCES
