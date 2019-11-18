@@ -118,6 +118,7 @@ ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
        y = "Total Lobster Observations",
        fill = "Site")
 ```
+
 ***Figure 4: Annual Lobster Abundance.*** 
 *Lobster counts at the Arroyo Quemado, Carpinteria, Isla Vista, Mohawk, and Naples study sites between the years of 2012 - 2018. Data: [Reed D. 2019.](
 https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
@@ -157,6 +158,7 @@ ggplot(data = lobster_size) +
   labs(x = "Lobster Size (mm)",
        y = "Total Lobster Observations")
 ```
+
 ***Figure 5: Lobster Size Distributions Across 5 Study Sites***
 *Lobster size distribution of observations across the MPA Sites: Isla Vista & Naples; and non-MPA Sites: Arroyo Quemado, Carpinteria, Mohawk for the years 2012 and 2018. Data: [Reed D. 2019.](
 https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
@@ -266,7 +268,7 @@ size_nonmpa_ttest <- t.test(nonmpa_2012$size_mm, nonmpa_2018$size_mm, paired = F
 size_nonmpa_d <- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.rm = TRUE)
 # Effect size is 0.12, which is a small effect size, thus the difference between the samples is not easily noticeable. Cohen's D confirms that the uncertainty in the rejection of the null hypothesis, as indicated by the P value, is small.
 ```
-
+<br>
 ##### Lobster size differences between MPA and non-MPA sites for 2012 only
 
 
@@ -280,10 +282,6 @@ The mean size of lobsters found within the MPA sites increased by 10.2 millimete
 
 ##### Mean size differences in 2012 and 2018 for non-MPA sites only
 Mean sizes of lobsters found within the three non-MPA sites decreased by 1.3mm (from `r round(mean_nonmpa_2012, 1)` mm to `r round(mean_nonmpa_2018, 1)`mm) between 2012 and 2018. Between the two years, the size increase is not statistically significant (two-sided t-test, t(`r round(size_nonmpa_ttest$parameter, 1)`) = `r round(size_nonmpa_ttest$statistic, 1)`, *p* = `r round(size_nonmpa_ttest$p.value)`) and the effect size is small (Cohen's d = `r round(size_nonmpa_d$estimate, 2)`) This indicates that from 2012 to 2018, the mean lobster size decrease at non-MPA sites of 1.3mm was not significant nor substantive.
-
-
-<br>
-
 
 
 <br>
