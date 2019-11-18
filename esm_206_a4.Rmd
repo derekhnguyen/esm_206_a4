@@ -269,6 +269,7 @@ size_nonmpa_d <- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.r
 # Effect size is 0.12, which is a small effect size, thus the difference between the samples is not easily noticeable. Cohen's D confirms that the uncertainty in the rejection of the null hypothesis, as indicated by the P value, is small.
 ```
 <br>
+
 ##### Lobster size differences between MPA and non-MPA sites for 2012 only
 
 
