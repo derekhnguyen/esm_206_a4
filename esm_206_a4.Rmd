@@ -1,7 +1,7 @@
 ---
 title: "ESM 206 Assignment 4"
 author: "Derek Nguyen and Bobby Miyashiro"
-date: "11/10/2019"
+date: "11/18/2019"
 output: html_document
 ---
 
@@ -29,37 +29,38 @@ library(viridis)
 library(effsize)
 library(kableExtra)
 ```
+<br>
 
 ### INTRODUCTION
 
-The California Spiny Lobster, *Panulirus interruptus*, is a decapod crustacean that has a habitat that spans from the Monterey Bay, California to Baja California, Mexico (Sea Grant California XXXX). The California Spiny Lobster is one of the largest spiny lobsters in the world with males capable of growing up to three feet long and weighing up to 26 pounds. Fishing of California Spiny Lobster is regulated by the California Department of Fish and Wildlife and has an open season from October through March (Sea Grant California and California Department of Fish and Wildlife XXXX).
+The California Spiny Lobster, *Panulirus interruptus*, is a decapod crustacean that has a habitat that spans from the Monterey Bay, California to Baja California, Mexico (Sea Grant California 2019). The California Spiny Lobster is one of the largest spiny lobsters in the world with males capable of growing up to three feet long and weighing up to 26 pounds. Fishing of California Spiny Lobster is regulated by the California Department of Fish and Wildlife and has an open season from October through March (California Department of Fish and Wildlife and Sea Grant California 2019).
 
 Data on California Spiny Lobsters has been collected off of the coast of Santa Barbara by the Santa Barbara Coastal Term Ecological Research (SBC LTER), an interdisciplinary program based at the University of California, Santa Barbara Marine Science Institute. SB LTER has been collecting data on size, abundance, and fishing pressure of California Spiny Lobster at five study sites along the Santa Barbara Channel since 2012. Two of the sites, Naples and Isla Vista, are within Marine Protected Areas (MPAs) and three of the sites, Arroyo Quemado, Mohawk, and Carpinteria, are otuside of MPAs (Reed D. 2019). In an effort to investigate lobster size differences or similarities between the study sites within an MPA and those outside of an MPA, this report will analyze lobster sizes between the years of 2012 and 2018 and across the five different study sites.
 
 
-![](spiny_guy.png)
+![](lobster-underwater.jpg)
 
 
-**Figure 1: Spiny Lobster.** Picture of a California Spiny Lobster *(Credit: [Alamy] (https://www.alamy.com/stock-photo/california-spiny-lobster.html))*
+***Figure 1: California Spiny Lobster Underwater.*** *California Spiny Lobster walking on the sea floor. (Credit: [Vice](https://www.vice.com/en_us/article/gvk5kq/why-we-dont-eat-california-spiny-lobsters-even-though-they-taste-better))*
 
+![](cooked_lobster.jpg)
 
-
-
+***Figure 2: Cooked California Lobster.*** *A cooked California Spiny Lobster on a dish with butter and lemons. (Credit: [Sea Grant California](https://caseagrant.ucsd.edu/seafood-profiles/spiny-lobster))*
 
 ![](lobster sites.png)
 
-**Figure 2. Study Sites.** The five California Spiny Lobster study sites where data is collected by SBC LTER.  *(Credit: [EDI Data Portal](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=77&revision=newest))*
+**Figure 3. Study Sites.** *The five California Spiny Lobster study sites where data is collected by SBC LTER.  (Credit: [Reed D. 2019.](
+https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0))*
 
 
 
+<br>
 
 ### DATA AND METHODS
 
+<br>
 
 ### RESULTS
-
-
-
 
 ```{r, include = FALSE, echo=FALSE}
 lobster_abundance <- read_csv("lobster_abundance_sbc_lter.csv",
@@ -99,6 +100,7 @@ lobster_ysite$site[lobster_ysite$site == "MOHK"] <- "Mohawk"
 lobster_ysite$site[lobster_ysite$site == "NAPL"] <- "Naples"
 ```
 
+
 #### Results A: Visually explore changes in annual lobster abundance (counts) by site
 
 ```{r, echo = FALSE}
@@ -110,14 +112,15 @@ ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
   theme_dark() +
   scale_y_continuous(expand = c(0,0), lim = c(0,1000)) +
   scale_x_continuous(expand = c(0,0)) +
-  labs(title = "Annual Lobster Abundance by Site, 2012 - 2018",
-       subtitle = "MPAs: Isla Vista and Naples",
-       x = "Year",
+  labs(x = "Year",
        y = "Total Lobster Observations",
        fill = "Site")
 ```
-***Figure 3: Annual Lobster Abundance.*** 
-*Lobster counts at the five study sites between the years of 2012 - 2018 as measured by SBC LTER.*
+***Figure 4: Annual Lobster Abundance.*** 
+*Lobster counts at the Arroyo Quemado, Carpinteria, Isla Vista, Mohawk, and Naples study sites between the years of 2012 - 2018. Data: [Reed D. 2019.](
+https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
+
+
 
 #### Results B. Visually explore lobster size distribution shifts by comparing lobster sizes in 2012 and 2018.
 
@@ -139,7 +142,6 @@ lobster_size$site[lobster_size$site == "MOHK"] <- "Mohawk"
 lobster_size$site[lobster_size$site == "NAPL"] <- "Naples"
 ```
 
-Histogram for Results B
 ```{r, echo = FALSE}
 ggplot(data = lobster_size) +
   geom_histogram(aes(x = size_mm, fill = site, alpha = 0.7, color = site),
@@ -149,22 +151,13 @@ ggplot(data = lobster_size) +
   theme_minimal() +
   scale_y_continuous(expand = c(0,0)) +
   scale_x_continuous(expand = c(0,0)) +
-  labs(title = "Lobster Size Distributions across 5 Sites",
-       subtitle = "2012 & 2018",
-       x = "Lobster Size (mm)",
+  labs(x = "Lobster Size (mm)",
        y = "Total Lobster Observations")
 ```
-***Figure 4: Lobster Size for 2012 & 2018***
-*Lobster size distribution of observations across the five SBC LTER study sites for the years 2012 and 2018.*
+***Figure 5: Lobster Size Distributions Across 5 Study Sites***
+*Lobster size distribution of observations across the Arroyo Quemado, Carpinteria, Isla Vista, Mohawk, and Naples study sites for the years 2012 and 2018. Data: [Reed D. 2019.](
+https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
 
-```{r, echo = FALSE}
-ggplot(data = lobster_size) +
-  geom_density(aes(fill = year, x = size_mm),
-               alpha = 0.5) +
-  facet_wrap(~site) +
-  theme_bw() +
-  labs(x = "Size (mm)", y = "Density", title = "Lobster Distribution Across 5 Sites", fill = "Year")
-```
 
 
 #### Results C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018. 
@@ -180,7 +173,6 @@ lobster_mean_size <- lobster_tidy %>%
 ```
 
 
-
 ```{r, echo = FALSE, message= FALSE}
 lobster_size_table <- lobster_mean_size %>% 
   summarize(mean = mean(size_mm, na.rm = TRUE),
@@ -189,7 +181,9 @@ lobster_size_table <- lobster_mean_size %>%
   mutate_if(is.numeric, round, 1)
 ```
 
-
+***Table 1: Lobster Size Metrics***
+*Means, Standard Deviations, and Sample Sizes of the California Spiny Lobsters for the years 2012 and 2018 between the MPA and non-MPA Sites. Data: [Reed D. 2019.](
+https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0)*
 ```{r, echo = FALSE}
 lobster_size_table %>% 
   kable(col.names = c("Year",
@@ -199,8 +193,7 @@ lobster_size_table %>%
                       "Sample Size")) %>% 
           kable_styling(bootstrap_options = "striped",
                         full_width = F,
-                        position = "center") %>%
-          add_header_above(c("Lobster Size Metrics" = 5)) %>% 
+                        position = "center") %>% 
           row_spec(c(1,3),
                    color = "red") %>% 
   row_spec(c(2,4),
@@ -245,11 +238,20 @@ size_nonmpa_d <- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.r
 
 *Alternate Hypothesis*: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are not the same...
 
-
-
+<br>
 
 ### SUMMARY
 
 
+<br>
 
 ### REFERENCES
+
+**California Department of Fish & Wildlife and Sea Grant Foundation.** California Spiny Lobster: fishing and life history information. https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=36321&inline. Accessed 11/17/2019.
+
+**Clarissa Wei.** 2016. Vice. Why We Don't Eat California Spiny Lobsters (Even Though They Taste Better). https://www.vice.com/en_us/article/gvk5kq/why-we-dont-eat-california-spiny-lobsters-even-though-they-taste-better. Photo by Kate Mansury. Accessed 11/17/2019.
+
+**Reed D. 2019.** SBC LTER: Reef: Abundance, size and fishing effort for California Spiny Lobster (Panulirus interruptus), ongoing since 2012. Environmental Data Initiative. https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0. Dataset accessed 10/30/2019.
+
+**Sea Grant California.** California Seafood Profiles, About, Spiny Lobster: Panulirus interruptus. https://caseagrant.ucsd.edu/seafood-profiles/spiny-lobster. Accessed 11/17/2019.
+
